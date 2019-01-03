@@ -14,6 +14,7 @@
 
             <module>sparkmall-common</module>
             <module>sparkmall-mock</module>
+            <module>sparkmall-offline</module>
         </modules>
         <properties>
             <spark.version>2.1.1</spark.version>

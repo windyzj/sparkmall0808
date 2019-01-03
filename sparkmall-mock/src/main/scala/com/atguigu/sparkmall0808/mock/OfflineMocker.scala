@@ -1,6 +1,6 @@
 package com.atguigu.sparkmall0808.mock
 
-import com.atguigu.sparkmall0808.common.ConfigurationUtil
+import com.atguigu.sparkmall0808.common.ConfigUtil
 import com.atguigu.sparkmall0808.common.bean.{CityInfo, ProductInfo, UserInfo, UserVisitAction}
 import com.atguigu.sparkmall0808.mock.utils.{RanOpt, RandomDate, RandomNum, RandomOptions}
 import org.apache.commons.configuration2.FileBasedConfiguration
@@ -76,7 +76,7 @@ object OfflineMocker {
     }
 
     def insertHive(sparkSession: SparkSession, tableName: String, dataFrame: DataFrame): Unit = {
-      val config: FileBasedConfiguration = ConfigurationUtil("config.properties").config
+      val config: FileBasedConfiguration = ConfigUtil("config.properties").config
       val database: String = config.getString("hive.database")
       sparkSession.sql("use "+database)
       sparkSession.sql("drop table if exists " + tableName)
