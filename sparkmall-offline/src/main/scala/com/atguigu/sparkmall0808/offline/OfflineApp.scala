@@ -43,11 +43,11 @@ object OfflineApp {
     val sessionActionsRDD: RDD[(String, Iterable[UserVisitAction])] = userActionRDD.map { userAction => (userAction.session_id, userAction) }.groupByKey()
     //需求一
     SessionStatApp.statSession(sessionActionsRDD, sparkSession, taskId, conditionJsonString)
-    println("需求一 完成！")
+    println("需求一 完成!!")
     //需求二
 
     SessionExtractorApp.extractSession(sessionActionsRDD, sparkSession, taskId)
-    println("需求二 完成！")
+    println("需求二 完成!!")
 
 
 
