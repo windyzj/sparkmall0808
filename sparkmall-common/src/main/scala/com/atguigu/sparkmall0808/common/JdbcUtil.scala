@@ -69,4 +69,8 @@ object JdbcUtil {
     }
     rtn
   }
+
+  def main(args: Array[String]): Unit = {
+      JdbcUtil.executeUpdate("insert into category_top10_session_count values(?,?,?,?)", Array("aaa","12","bbb", 12 ) )
+  }
 }
