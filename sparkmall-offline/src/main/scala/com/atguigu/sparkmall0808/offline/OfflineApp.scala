@@ -6,7 +6,7 @@ import java.util.{Date, UUID}
 import com.alibaba.fastjson.{JSON, JSONObject}
 import com.atguigu.sparkmall0808.common.{ConfigUtil, JdbcUtil}
 import com.atguigu.sparkmall0808.common.bean.UserVisitAction
-import com.atguigu.sparkmall0808.offline.app.{SessionExtractorApp, SessionStatApp}
+import com.atguigu.sparkmall0808.offline.app.{CategoryTop10App, SessionExtractorApp, SessionStatApp}
 import com.atguigu.sparkmall0808.offline.bean.SessionInfo
 import com.atguigu.sparkmall0808.offline.utils.SessionAccumulator
 import org.apache.commons.configuration2.FileBasedConfiguration
@@ -38,17 +38,19 @@ object OfflineApp {
     println(conditionJsonObj.getString("startDate"))
     //1 根据过滤条件 取出符合的日志RDD集合  成为RDD[UserVisitAction]
     val userActionRDD: RDD[UserVisitAction] = readUserVisitActionRDD(sparkSession, conditionJsonObj)
-
+    userActionRDD.cache()
     //    2 以sessionId为key 进行聚合   =》 RDD[sessionId,Iterable[UserVisitAction]]
     val sessionActionsRDD: RDD[(String, Iterable[UserVisitAction])] = userActionRDD.map { userAction => (userAction.session_id, userAction) }.groupByKey()
     //需求一
     SessionStatApp.statSession(sessionActionsRDD, sparkSession, taskId, conditionJsonString)
     println("需求一 完成!!")
     //需求二
-
+    sessionActionsRDD.count()
     SessionExtractorApp.extractSession(sessionActionsRDD, sparkSession, taskId)
     println("需求二 完成!!")
-
+   //需求三
+    CategoryTop10App.statCategoryTop10(userActionRDD,sparkSession,taskId)
+    println("需求三 完成！")
 
 
 
