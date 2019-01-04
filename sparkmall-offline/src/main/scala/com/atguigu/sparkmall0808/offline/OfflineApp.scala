@@ -6,8 +6,8 @@ import java.util.{Date, UUID}
 import com.alibaba.fastjson.{JSON, JSONObject}
 import com.atguigu.sparkmall0808.common.{ConfigUtil, JdbcUtil}
 import com.atguigu.sparkmall0808.common.bean.UserVisitAction
-import com.atguigu.sparkmall0808.offline.app.{CategoryTop10App, SessionExtractorApp, SessionStatApp}
-import com.atguigu.sparkmall0808.offline.bean.SessionInfo
+import com.atguigu.sparkmall0808.offline.app.{CategorySessionApp, CategoryTop10App, SessionExtractorApp, SessionStatApp}
+import com.atguigu.sparkmall0808.offline.bean.{CategoryCountInfo, SessionInfo}
 import com.atguigu.sparkmall0808.offline.utils.SessionAccumulator
 import org.apache.commons.configuration2.FileBasedConfiguration
 import org.apache.spark.rdd.RDD
@@ -49,9 +49,11 @@ object OfflineApp {
     SessionExtractorApp.extractSession(sessionActionsRDD, sparkSession, taskId)
     println("需求二 完成!!")
    //需求三
-    CategoryTop10App.statCategoryTop10(userActionRDD,sparkSession,taskId)
+    val categoryTop10: List[CategoryCountInfo] = CategoryTop10App.statCategoryTop10(userActionRDD,sparkSession,taskId)
     println("需求三 完成！")
-
+   //需求四
+    CategorySessionApp.statCategoryTop10Session(categoryTop10,userActionRDD,sparkSession,taskId)
+    println("需求四 完成！")
 
 
   }
