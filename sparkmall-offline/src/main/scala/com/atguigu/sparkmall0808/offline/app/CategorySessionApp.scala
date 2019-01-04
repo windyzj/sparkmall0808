@@ -41,16 +41,18 @@ object CategorySessionApp {
     val sessionTop10RDD: RDD[CategorySession ]  = cidSessionGroupRDD.flatMap { case (cid, sessionItr) =>
       val top10SessionCountList: List[(String, Long)] = sessionItr.toList.sortWith { (sessionCount1, sessionCount2) =>
 
-      //  println(s"sessionCount1 = ${sessionCount1._2}")
-     //   println(s"sessionCount2 = ${sessionCount2._2}")
+        //  println(s"sessionCount1 = ${sessionCount1._2}")
+        //   println(s"sessionCount2 = ${sessionCount2._2}")
 
-        sessionCount1._2 > sessionCount2._2
+        //sessionCount1._2 > sessionCount2._2
 
-//        if (sessionCount1._2 < sessionCount2._2){
-//          false
-//        } else {
-//          true
-//        }
+       //  返回true必须明确表明前面大或后面大  其他情况必须返回false,相等情况不能返回true  jdk1.7以上要求
+        if (sessionCount1._2 <= sessionCount2._2) {
+          false
+        }
+         else {
+           true
+        }
 
       }.take(10)
      // println(top10SessionCountList.mkString("\n"))
