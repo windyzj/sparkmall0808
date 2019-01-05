@@ -6,7 +6,7 @@ import java.util.{Date, UUID}
 import com.alibaba.fastjson.{JSON, JSONObject}
 import com.atguigu.sparkmall0808.common.{ConfigUtil, JdbcUtil}
 import com.atguigu.sparkmall0808.common.bean.UserVisitAction
-import com.atguigu.sparkmall0808.offline.app.{CategorySessionApp, CategoryTop10App, SessionExtractorApp, SessionStatApp}
+import com.atguigu.sparkmall0808.offline.app._
 import com.atguigu.sparkmall0808.offline.bean.{CategoryCountInfo, SessionInfo}
 import com.atguigu.sparkmall0808.offline.utils.SessionAccumulator
 import org.apache.commons.configuration2.FileBasedConfiguration
@@ -54,6 +54,9 @@ object OfflineApp {
    //需求四
     CategorySessionApp.statCategoryTop10Session(categoryTop10,userActionRDD,sparkSession,taskId)
     println("需求四 完成！")
+    //需求五
+    PageConvertRateApp.calcPageConvertRate(userActionRDD,sparkSession,taskId,conditionJsonObj)
+    println("需求五 完成!")
 
 
   }
