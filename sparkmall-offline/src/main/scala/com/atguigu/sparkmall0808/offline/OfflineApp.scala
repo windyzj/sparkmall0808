@@ -57,8 +57,9 @@ object OfflineApp {
     //需求五
     PageConvertRateApp.calcPageConvertRate(userActionRDD,sparkSession,taskId,conditionJsonObj)
     println("需求五 完成!")
-
-
+   //需求六
+    AreaTop3ClickCountApp.statAreaTop3ClickCount(sparkSession)
+    println("需求六 完成!")
   }
 
 
