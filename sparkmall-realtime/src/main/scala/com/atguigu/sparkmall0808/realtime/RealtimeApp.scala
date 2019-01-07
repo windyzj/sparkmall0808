@@ -1,7 +1,7 @@
 package com.atguigu.sparkmall0808.realtime
 
 import com.atguigu.sparkmall0808.common.MyKafkaUtil
-import com.atguigu.sparkmall0808.realtime.app.BlackListApp
+import com.atguigu.sparkmall0808.realtime.app.{AreaCityAdsPerDayApp, BlackListApp}
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.spark.streaming.dstream.{DStream, InputDStream}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
@@ -23,7 +23,10 @@ object RealtimeApp {
     //  过滤掉在黑名单中的用户日志
     val filteredAdsClickInfoDStream: DStream[AdsInfo] = BlackListApp.checkUserFromBlackList(adsClickInfoDStream,sc)
     //
+
     BlackListApp.checkUserToBlackList(filteredAdsClickInfoDStream)
+
+    AreaCityAdsPerDayApp.updateAreaCityAdsPerDay(filteredAdsClickInfoDStream,sc)
     ssc.start()
     ssc.awaitTermination()
   }
